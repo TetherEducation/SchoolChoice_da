@@ -70,8 +70,8 @@ class Applicant():
         self.__original_vpostulation = vpostulation
         self.__original_vinstitution_id = vinstitution_id
         self.__original_vquota_id = vquota_id
-        self.__se_program_id = se_program_id if (se_program_id!=0 or se_program_id!='') else None
-        self.__se_quota_id = se_quota_id if (se_program_id!=0 or se_program_id!='') else None
+        self.__se_program_id = se_program_id if (se_program_id!=0 and se_program_id!='') else None
+        self.__se_quota_id = se_quota_id if (se_program_id!=0 and se_program_id!='') else None
         self._unpack_priorities_and_scores(vpostulation_scores,vpriorities,vpriority_profile)
 
         if len(applicant_characteristics)>0:
