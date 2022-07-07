@@ -25,6 +25,8 @@ class Applicant():
                 'eq':operator.eq,
                 'neq':operator.ne}
 
+    secured_enrollment_priority = 0
+
     def __init__(self,
                  applicant_id: Any,
                  special_assignment: int,
@@ -234,13 +236,16 @@ class Applicant():
     def set_secured_place_as_last_postulation(self) -> None:
         '''
         Drop the postulation arrays elements that are after secured enrollment.
+        Also set the priority of (SE_program,SE_quota) postulation to the predefined
+        SE priority.
+        Raise if the postulation is not found
         '''
         self.cut_postulation = True
         try:
             last_post_index = \
-                np.where(self.vpostulation == self.__se_program_id)[0][-1]
+                np.where(self.vpostulation == self.se_program_id)[0][-1]
         except:
-            raise ValueError(f'Applicant {self.id} does not have the SE program {self.__se_program_id} in vpostulation.')
+            raise ValueError(f'Applicant {self.id} does not have the SE program {self.se_program_id} in vpostulation.')
         #The +1 ensures that [:last_index] includes the SE program
         last_index = last_post_index+1
         # Keep only the postulation that are at the left of the
@@ -248,6 +253,11 @@ class Applicant():
         self.vpostulation = self.vpostulation[:last_index]
         self.vinstitution_id = self.vinstitution_id[:last_index]
         self.vquota_id = self.vquota_id[:last_index]
+
+        try:
+            self.vpriorities[(self.se_program_id,self.se_quota_id)] = self.secured_enrollment_priority
+        except:
+            raise ValueError(f'Applicant {self.id} does not have the pair (SE_program,SE_quota) ({self.se_program_id},{self.se_quota_id}) in vpostulation.')
 
 
     def check_attribute_criteria(self,
