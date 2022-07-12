@@ -28,7 +28,13 @@ class PolicyMaker:
             quota_order: pd.DataFrame,
             siblings: pd.DataFrame,
             links: pd.DataFrame,
-            config: Dict[str, Any],
+            order: str = 'descending',
+            sibling_priority_activation : bool = False,
+            linked_postulation_activation : bool = False,
+            secured_enrollment_assignment : bool = False,
+            forced_secured_enrollment_assignment : bool = False,
+            transfer_capacity_activation : bool = False,
+            check_inputs : bool =True,
             **kwargs
             ) -> None:
         '''
@@ -41,10 +47,25 @@ class PolicyMaker:
             quota_order (pd.DataFrame): DataFrame with quota_order info.
             siblings (pd.DataFrame): DataFrame with siblings info.
             links (pd.DataFrame): DataFrame with links info.
-            config (Dict): Dict with the set of rules for the match
+            order (str): Orden en el que se corre el algoritmo.
+            sibling_priority_activation (bool): Para activar prioridad de hermano
+            entre niveles y tipos de asignación (special y Regular.).
+            linked_postulation_activation (bool): Para activar postulación en bloque.
+            secured_enrollment_assignment (bool): Para activar el uso de secured enrollment.
+            forced_secured_enrollment_assignment (bool): Para forzar la asignación
+            SE en caso de no haber cupos.
+            transfer_capacity_activation (bool): Transfiere vacantes no utilizadas
+            desde special a regular assignment.
+            check_inputs (bool): Revisa que los dataframes cumplan ciertos requisitos.
         '''
-        self.config = config
-        self._set_rules()
+        self._set_rules(order = order,
+                sibling_priority_activation = sibling_priority_activation,
+                linked_postulation_activation = linked_postulation_activation,
+                secured_enrollment_assignment = secured_enrollment_assignment,
+                forced_secured_enrollment_assignment = forced_secured_enrollment_assignment,
+                transfer_capacity_activation = transfer_capacity_activation,
+                check_inputs = check_inputs)
+
         self.check_inputs(vacancies=vacancies,
                             applicants=applicants,
                             applications=applications,
@@ -309,24 +330,26 @@ class PolicyMaker:
                 .set_index('applicant_id')
                 .to_dict(orient='dict'))['applicant_object']
 
-    def _set_rules(self):
+    def _set_rules(
+            self,
+            **kwargs) -> None:
         '''
-        Set rules of the school assignment according to config
+        Set rules of the school assignment according to parameters provided
         '''
-        self._order = self.config['order']
+        self._order = kwargs['order']
 
         self._sibling_priority_activation = \
-            self.config['sibling_priority_activation']
+            kwargs['sibling_priority_activation']
         self._linked_postulation_activation = \
-            self.config['linked_postulation_activation']
+            kwargs['linked_postulation_activation']
         self._transfer_capacity_activation = \
-            self.config['transfer_capacity_activation']
+            kwargs['transfer_capacity_activation']
         self._secured_enrollment_activation = \
-            self.config['secured_enrollment_assignment']
+            kwargs['secured_enrollment_assignment']
         self._forced_secured_enrollment_activation = \
-            self.config['forced_secured_enrollment_assignment']
+            kwargs['forced_secured_enrollment_assignment']
         self._check_inputs = \
-            self.config['check_inputs']
+            kwargs['check_inputs']
 
     def _get_ordered_grades(self) -> List:
         '''
