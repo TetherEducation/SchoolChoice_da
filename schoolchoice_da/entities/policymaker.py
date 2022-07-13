@@ -845,6 +845,10 @@ class PolicyMaker:
             aux_values = df.values.T
             other_col_names = df.columns[1:]
             keys = aux_values[0,:]
+            try:
+                keys = keys.astype(int)
+            except:
+                keys = keys.astype(str)
             values = aux_values[1:,:]
             ukeys, index = np.unique(keys, return_index=True, axis=0)
             # split data columns according to those indices
