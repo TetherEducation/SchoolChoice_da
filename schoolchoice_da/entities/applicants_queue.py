@@ -54,7 +54,7 @@ class Applicant_Queue:
         Check if the capacity constraints are fitted.
 
         Returns:
-            bool: True if there are less applicants assigned than capacity.
+            bool: False if there are less applicants assigned than capacity.
         '''
         if self.capacity > len(self.vassigned_applicants):
             return False

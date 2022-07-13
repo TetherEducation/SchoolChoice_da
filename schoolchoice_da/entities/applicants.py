@@ -31,17 +31,17 @@ class Applicant():
                  applicant_id: Any,
                  special_assignment: int,
                  grade_id: int,
-                 links: List[Any],
-                 siblings: List[Any],
-                 vpostulation: List[Any],
-                 vpostulation_scores: List[float],
-                 vinstitution_id: List[Any],
-                 vpriorities: List[int],
-                 vquota_id: List[int],
-                 vpriority_profile: List[int],
-                 se_program_id: int = 0,
-                 se_quota_id: int = 0,
-                 applicant_characteristics ={},
+                 links: np.ndarray,
+                 siblings: np.ndarray,
+                 vpostulation: np.ndarray,
+                 vpostulation_scores: np.ndarray,
+                 vinstitution_id: np.ndarray,
+                 vpriorities: np.ndarray,
+                 vquota_id: np.ndarray,
+                 vpriority_profile: np.ndarray,
+                 se_program_id: Any = 0,
+                 se_quota_id: Any = 0,
+                 applicant_characteristics = {},
                  **kwargs):
         '''
         Init a Applicant instance.
@@ -50,14 +50,14 @@ class Applicant():
             applicant_id (Any): Hashable
             special_assignment (int): Indicate the applicants type of assignment
             grade_id (int):
-            links (List[Any]): List of applicant_id
-            siblings (List[Any]): List of applicant_id
-            vpostulation (List[Any]): List of program_id where to apply
-            vpostulation_scores (List[float]): List of scores
-            vinstitution_id (List[Any]): List of institution_id
-            vpriorities (List[int]): List of priorities
-            vquota_id (List[int]): List of quotas associated with vpostulation
-            vpriority_profile (List[int]): List of priorities associated with
+            links (Array[Any]): Array of applicant_id
+            siblings (Array[Any]): Array of applicant_id
+            vpostulation (Array[Any]): Array of program_id where to apply
+            vpostulation_scores (Array[float]): Array of scores
+            vinstitution_id (Array[Any]): Array of institution_id
+            vpriorities (Array[int]): Array of priorities
+            vquota_id (Array[int]): Array of quotas associated with vpostulation
+            vpriority_profile (Array[int]): Array of priorities associated with
                 vpostulation
             se_program_id (int): 0 or program_id
             se_quota_id (int): 0 or quota_id
