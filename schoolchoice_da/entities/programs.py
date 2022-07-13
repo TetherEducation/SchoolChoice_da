@@ -162,7 +162,7 @@ class Program:
         assignment.add_score_to_program(applicant_score)
 
         #Remove applicant from waitlist
-        self.waitlist_dict.pop(secured_applicant.id)
+        self.waitlist_dict.pop(secured_applicant.id,None)
 
     def _reset_matching_attributes(self) -> None:
         '''
