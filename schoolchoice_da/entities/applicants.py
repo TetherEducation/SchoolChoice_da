@@ -29,7 +29,6 @@ class Applicant():
 
     def __init__(self,
                  applicant_id: Any,
-                 special_assignment: int,
                  grade_id: int,
                  links: np.ndarray,
                  siblings: np.ndarray,
@@ -39,6 +38,7 @@ class Applicant():
                  vpriorities: np.ndarray,
                  vquota_id: np.ndarray,
                  vpriority_profile: np.ndarray,
+                 special_assignment: int = 0,
                  se_program_id: Any = 0,
                  se_quota_id: Any = 0,
                  applicant_characteristics = {},
@@ -48,7 +48,6 @@ class Applicant():
 
         Args:
             applicant_id (Any): Hashable
-            special_assignment (int): Indicate the applicants type of assignment
             grade_id (int):
             links (Array[Any]): Array of applicant_id
             siblings (Array[Any]): Array of applicant_id
@@ -59,6 +58,7 @@ class Applicant():
             vquota_id (Array[int]): Array of quotas associated with vpostulation
             vpriority_profile (Array[int]): Array of priorities associated with
                 vpostulation
+            special_assignment (int): Indicate the applicants type of assignment
             se_program_id (int): 0 or program_id
             se_quota_id (int): 0 or quota_id
             applicant_characteristics (dict, optional): Dictionary with

@@ -188,8 +188,7 @@ class PolicyMaker:
                 if not (requested_column in vacancies.columns):
                     raise KeyError(f'Expected column "{requested_column}" in vacancies DataFrame.')
 
-            for requested_column in ['applicant_id','grade_id',
-                    'special_assignment']:
+            for requested_column in ['applicant_id','grade_id']:
                 if not (requested_column in applicants.columns):
                     raise KeyError(f'Expected column "{requested_column}" in applicants DataFrame.')
             if self._secured_enrollment_activation or \
@@ -402,8 +401,11 @@ class PolicyMaker:
             assignment_type (int)
         '''
         # Select all applicants in such grade and assignment type
-        q1 = (f'((grade_id == {grade}) &'
-              f' (special_assignment == {assignment_type}))')
+        if 'special_assignment' in self.applicants_df.columns:
+            q1 = (f'((grade_id == {grade}) &'
+                  f' (special_assignment == {assignment_type}))')
+        else:
+            q1 = (f'(grade_id == {grade})')            
         stus_to_be_assigned_df = self.applicants_df.query(q1)
         if grade != self.first_round:
             # Apply Dynamic sibling priority
