@@ -200,13 +200,13 @@ class Program:
 
     def add_applicant_to_waitlist(
         self,
-        applicant: Applicant,
+        applicant_id,
         priority_number_quota: float) -> None:
         '''
         Add Applicant to waitlist
 
         Args:
-            applicant (Applicant): Applicant to be added
+            applicant_id: applicant_id to be added
             priority_number_quota (float): Score
         '''
-        self.waitlist_dict.update({applicant.id:priority_number_quota})
+        self.waitlist_dict.update({applicant_id:priority_number_quota})

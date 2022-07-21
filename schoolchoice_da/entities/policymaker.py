@@ -93,6 +93,7 @@ class PolicyMaker:
         self.applicants = self._get_applicants_dict()
 
         self.programs = self._init_programs_to_dict(vacancies=vacancies)
+        self.add_unrelevant_applications_to_waitlist()
 
         self.ordered_grades = self._get_ordered_grades()
         self.assignment_types = self._get_assignment_types()
@@ -405,7 +406,7 @@ class PolicyMaker:
             q1 = (f'((grade_id == {grade}) &'
                   f' (special_assignment == {assignment_type}))')
         else:
-            q1 = (f'(grade_id == {grade})')            
+            q1 = (f'(grade_id == {grade})')
         stus_to_be_assigned_df = self.applicants_df.query(q1)
         if grade != self.first_round:
             # Apply Dynamic sibling priority
@@ -776,10 +777,16 @@ class PolicyMaker:
             applications = applications.drop(columns=['SE'])
 
         # Keep postulations if any of the two conditions above are meet
+        self.unrelevant_applications = applications.loc[~applications.Relevant][['applicant_id','program_id','quota_id','priority_number_quota']]
         applications = applications.loc[applications.Relevant]
         applications = applications.drop(columns=['Relevant'])
 
         return applications
+
+    def add_unrelevant_applications_to_waitlist(self):
+        for _,(applicant_id,program_id,quota_id,priority_number_quota) in self.unrelevant_applications.iterrows():
+            self.programs[(program_id,quota_id)].add_applicant_to_waitlist(applicant_id,priority_number_quota)
+        del self.unrelevant_applications
 
 
     def _check_lottery(

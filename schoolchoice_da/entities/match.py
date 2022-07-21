@@ -118,8 +118,8 @@ class DeferredAcceptanceAlgorithm:
                 rejected_applicant = cut_off_applicant
                 rejected_score = cut_off_score
         if rejected_applicant:
-            program.add_applicant_to_waitlist(rejected_applicant,rejected_score//1)
-
+            program.add_applicant_to_waitlist(rejected_applicant.id,rejected_score//1)
+        
         return rejected_applicant
 
     @staticmethod
