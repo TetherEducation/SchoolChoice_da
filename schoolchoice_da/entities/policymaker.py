@@ -827,6 +827,7 @@ class PolicyMaker:
                 applications = lottery_maker(applicants = applicants,
                             applications = applications,
                             siblings = siblings,
+                            order_applicants = False,
                             **kwargs)
 
         return applications

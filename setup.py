@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="schoolchoice_da",
-    version="1.0.2",
+    version="1.1.0",
     install_requires=[
         'pandas>=1.2.5',
         'numpy>=1.20.2',
