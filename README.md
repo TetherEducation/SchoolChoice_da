@@ -6,12 +6,12 @@ Python package developed by [TetherEducation](https://www.tether.education/) wit
 ## Installation
 
 ``` bash
-git clone https://https://github.com/TetherEducation/SchoolChoice_da
+git clone https://github.com/TetherEducation/SchoolChoice_da
 pip install -e schoolchoice_da
 ```
 or alternatively
 ``` bash
-pip install git+https://https://github.com/TetherEducation/SchoolChoice_da
+pip install git+https://github.com/TetherEducation/SchoolChoice_da
 ```
 
 ## Getting started
