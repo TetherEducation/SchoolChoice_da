@@ -5,10 +5,11 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="schoolchoice_da",
-    version="1.1.2",
+    version="1.1.3",
     install_requires=[
         'pandas>=1.2.5',
         'numpy>=1.20.2',
+        'Faker>=13.15.0'
     ],
     author="TetherEducation",
     author_email="benjamin@tether.education",
