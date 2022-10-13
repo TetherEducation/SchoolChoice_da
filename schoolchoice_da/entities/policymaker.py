@@ -192,6 +192,8 @@ class PolicyMaker:
             for requested_column in ['applicant_id','grade_id']:
                 if not (requested_column in applicants.columns):
                     raise KeyError(f'Expected column "{requested_column}" in applicants DataFrame.')
+            if len(set(applicants['applicant_id']))!= len(applicants):
+                raise ValueError('applicant_id in the applicants database must be unique.')
             if self._secured_enrollment_activation or \
                     self._forced_secured_enrollment_activation:
                 if not ('secured_enrollment_program_id' in applicants.columns):
