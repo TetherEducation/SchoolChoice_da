@@ -90,9 +90,9 @@ class PolicyMaker:
         applicants = self._add_postulation_data(applicants=applicants,
                                                 applications=applications)
         self.applicants_df = self._init_applicants(applicants=applicants)
-        self.applicants = self._get_applicants_dict()
+        self.applicants : Dict[Any,Applicant] = self._get_applicants_dict()
 
-        self.programs = self._init_programs_to_dict(vacancies=vacancies)
+        self.programs : Dict[Tuple(Any,int),Applicant] = self._init_programs_to_dict(vacancies=vacancies)
         self.add_unrelevant_applications_to_waitlist()
 
         self.ordered_grades = self._get_ordered_grades()
@@ -127,6 +127,7 @@ class PolicyMaker:
                     self.algorithm.run(applicants=applicants_to_be_assigned,
                                    programs=programs_to_be_assigned)
                 except:
+                    self._check_grade_compatibility()
                     raise ValueError(f'Error while assigning grade:{grade} and assignment_type:{assignment_type}')
 
                 # Apply transfer capacity or forced secured enrollment
@@ -651,6 +652,20 @@ class PolicyMaker:
                 applicant)
             applicant.match = True
             applicant.assigned_vacancy = secured_program
+
+    def _check_grade_compatibility(self) -> None:
+        '''
+        After a error is raised inside algorithms.run, if it its a match error, 
+        checks if it is due to grade compatibility.
+        '''
+        if len(self.algorithm.errors)>0:
+            program_id = self.algorithm.errors['program_id']
+            prog = self.programs[program_id]
+            applicant_id = self.algorithm.errors['applicant_id']
+            app = self.applicants[applicant_id]
+            if app.grade!=prog.grade:
+                raise ValueError(f'Student {applicant_id} from grade {app.grade} is applying to program {program_id} from grade {prog.grade}.')
+        return
 
     def _init_applicant_object(self, **row: Dict) -> Applicant:
         '''

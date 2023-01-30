@@ -12,6 +12,7 @@ from schoolchoice_da.entities.applicants import Applicant
 
 class DeferredAcceptanceAlgorithm:
     def __init__(self):
+        self.errors = {}
         pass
 
     def run(self,
@@ -38,6 +39,9 @@ class DeferredAcceptanceAlgorithm:
                                             applicant,
                                             program)
                 except:
+                    self.errors['applicant_id'] = applicant.id
+                    self.errors['program_id'] = program_id
+                    self.errors['quota_id'] = quota_id
                     raise ValueError(f'Error while assigning applicant\
                         :{applicant.id} to program:{(program_id, quota_id)}')
                 if rejected_applicant:
