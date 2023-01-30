@@ -8,8 +8,7 @@ setuptools.setup(
     version="1.1.3",
     install_requires=[
         'pandas>=1.2.5',
-        'numpy>=1.20.2',
-        'Faker>=13.15.0'
+        'numpy>=1.20.2'
     ],
     author="TetherEducation",
     author_email="benjamin@tether.education",
