@@ -92,7 +92,7 @@ class PolicyMaker:
         self.applicants_df = self._init_applicants(applicants=applicants)
         self.applicants : Dict[Any,Applicant] = self._get_applicants_dict()
 
-        self.programs : Dict[Tuple(Any,int),Applicant] = self._init_programs_to_dict(vacancies=vacancies)
+        self.programs : Dict[Tuple(Any,int),Program] = self._init_programs_to_dict(vacancies=vacancies)
         self.add_unrelevant_applications_to_waitlist()
 
         self.ordered_grades = self._get_ordered_grades()
@@ -660,11 +660,12 @@ class PolicyMaker:
         '''
         if len(self.algorithm.errors)>0:
             program_id = self.algorithm.errors['program_id']
-            prog = self.programs[program_id]
+            quota_id = self.algorithm.errors['quota_id']
+            prog = self.programs[(program_id,quota_id)]
             applicant_id = self.algorithm.errors['applicant_id']
             app = self.applicants[applicant_id]
-            if app.grade!=prog.grade:
-                raise ValueError(f'Student {applicant_id} from grade {app.grade} is applying to program {program_id} from grade {prog.grade}.')
+            if app.grade!=prog.grade_id:
+                raise ValueError(f'Student {applicant_id} from grade {app.grade} is applying to program {program_id} from grade {prog.grade_id}.')
         return
 
     def _init_applicant_object(self, **row: Dict) -> Applicant:

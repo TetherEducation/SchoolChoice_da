@@ -13,7 +13,6 @@ from schoolchoice_da.entities.applicants import Applicant
 class DeferredAcceptanceAlgorithm:
     def __init__(self):
         self.errors = {}
-        pass
 
     def run(self,
             applicants: Dict[int, Applicant],
