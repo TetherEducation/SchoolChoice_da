@@ -1,8 +1,12 @@
 name: Testing
 
 on:
+  push:
+    branches:
+    - main
   pull_request:
-    branches: [ develop, master ]
+    branches:
+    - main
 
   workflow_dispatch:
 
